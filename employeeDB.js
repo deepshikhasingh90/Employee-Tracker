@@ -92,7 +92,6 @@ function start() {
         message: " What do you want to do?",
         choices: ["View All Employees",
             "View all employees By Department",
-            "View All Employee By Manager",
             "Add Employee",
             "Remove Employee",
             "Update Employee Roles",
