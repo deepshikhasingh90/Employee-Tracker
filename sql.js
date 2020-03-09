@@ -72,20 +72,20 @@ const addDept =(dept) => {
     return` INSERT INTO department (name) 
              VALUES ('${dept}');`
  }
- 
- 
 
-exports.viewEmployees = viewEmployees;
-exports.viewEmployeeByDept = viewEmployeeByDept;
-exports.roleTitleChoices = roleTitleChoices;
-exports.employeeList = employeeList;
-exports.addEmployee = addEmployee;
-exports.removeEmployee = removeEmployee;
-exports.updateEmployeeRole = updateEmployeeRole;
-exports.updateEmployeeManager = updateEmployeeManager;
-exports .viewAllRoles = viewAllRoles;
-exports.addRoles = addRoles;
-exports.deptList = deptList;
-exports.removeRoles = removeRoles;
-exports.viewAllDept = viewAllDept;
-exports.addDept = addDept;
+module.exports={
+viewEmployees,
+viewEmployeeByDept,
+roleTitleChoices,
+ employeeList,
+ addEmployee,
+removeEmployee,
+updateEmployeeRole,
+updateEmployeeManager,
+viewAllRoles,
+ addRoles,
+deptList,
+removeRoles,
+ viewAllDept,
+addDept
+}

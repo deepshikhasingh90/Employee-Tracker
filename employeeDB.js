@@ -89,7 +89,7 @@ function start() {
     inquirer.prompt({
         name: "action",
         type: "list",
-        message: "Hey there ! What do you want to do today?",
+        message: " What do you want to do?",
         choices: ["View All Employees",
             "View all employees By Department",
             "View All Employee By Manager",
@@ -161,13 +161,16 @@ function viewEmployee() {
     connection.query(sqlQuery.viewEmployees(), function (err, results) {
         if (err) throw err;
         console.table(results);
+        start();
     });
+
 };
 
 function viewEmployeeByDept() {
     connection.query(sqlQuery.viewEmployeeByDept(), function (err, results) {
         if (err) throw err;
         console.table(results);
+        start();
     });
 };
 
@@ -218,11 +221,12 @@ function addEmployee() {
         var managerID;
 
         var roleID = findRoleID(newRole, roleListObj)
-        var managerID = findManagerID(newManager, employeeNamesObj)
+        var managerID = (findManagerID(newManager, employeeNamesObj)) ? findManagerID(newManager, employeeNamesObj):null
 
         connection.query(sqlQuery.addEmployee(newFirstName, newLastName, roleID, managerID), function (err, results) {
             if (err) throw err;
-            console.log(`Added employee with name  ${newFirstName} ${newLastName} in the record.`)
+            console.log(`Added employee  ${newFirstName} ${newLastName} in the record.`)
+            start();
         });
     });
 
@@ -235,10 +239,16 @@ function removeEmployee() {
         message: "Please choose the employee you want to delete",
         choices: employeeNames
     }).then(function (answer) {
-        connection.query(sqlQuery.removeEmployee(answer.deleteEmployee), function (err, results) {
-            if (err) throw err;
-            console.log(`Deleted Employee ${answer.deleteEmployee} from the record`);
-        })
+        if (answer.deleteEmployee === 'None') {
+            start();
+        }
+        else {
+            connection.query(sqlQuery.removeEmployee(answer.deleteEmployee), function (err, results) {
+                if (err) throw err;
+                console.log(`Deleted Employee ${answer.deleteEmployee} from the record`);
+                start();
+            })
+        }
     })
 }
 
@@ -256,15 +266,19 @@ function updateEmployeeRoles() {
         choices: roleList
     }
     ]).then(function (answer) {
-
+        if (answer.employee === 'None') {
+            start();
+        }
+        else {
         var newRole = answer.newRole;
         var employeeName = answer.employee;
         var updatedRoleID = findRoleID(newRole, roleListObj);
-
         connection.query(sqlQuery.updateEmployeeRole(updatedRoleID, employeeName), function (err, results) {
             if (err) throw err;
             console.log("Record Updated!")
+            start();
         })
+    }
     })
 }
 
@@ -290,7 +304,8 @@ function updateEmployeeManager() {
 
         connection.query(sqlQuery.updateEmployeeManager(updatedManagerID, employeeName), function (err, results) {
             if (err) throw err;
-            console.log("Record Updated!")
+            console.log("Record Updated!");
+            start();
         })
     })
 }
@@ -299,6 +314,7 @@ function viewAllRoles() {
     connection.query(sqlQuery.viewAllRoles(), function (err, results) {
         if (err) throw err;
         console.table(results);
+        start();
     })
 }
 
@@ -312,6 +328,12 @@ function addRoles() {
         name: "salary",
         type: "input",
         message: "Please select the new salary",
+        validate: function (value) {
+            if (isNaN(value) === false) {
+                return true;
+            }
+            return false;
+        }
     },
     {
         name: "department",
@@ -328,7 +350,8 @@ function addRoles() {
 
         connection.query(sqlQuery.addRoles(title, salary, departmmentID), function (err, results) {
             if (err) throw err;
-            console.log(`Inserted new Role ${department}!`)
+            console.log(`Created new Role ${title}! successfully`)
+            start();
         })
 
     })
@@ -345,6 +368,7 @@ function removeRoles() {
         connection.query(sqlQuery.removeRoles(answer.deleteRole), function (err, results) {
             if (err) throw err;
             console.log(`Deleted Employee ${answer.deleteRole} from the record`);
+            start();
         })
     })
 }
@@ -353,6 +377,7 @@ function viewAllDept() {
     connection.query(sqlQuery.viewAllDept(), function (err, results) {
         if (err) throw err;
         console.table(results);
+        start();
     })
 }
 
@@ -364,7 +389,8 @@ function addDept() {
     }).then(function (answer) {
         connection.query(sqlQuery.addDept(answer.newDept), function (err, results) {
             if (err) throw err;
-            console.log("Successfully Added New Department");
+            console.log('New Department was created successfully!');
+            start();
         })
     })
 }
