@@ -61,7 +61,7 @@ const addRoles = (title,salary,department) => {
 }
 
 const removeRoles = (title) =>{
-    return `DELETE FROM role WHERE title =${title};`
+    return `DELETE FROM role WHERE title ="${title}";`
 }
 
 const viewAllDept =() => {

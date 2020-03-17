@@ -13,7 +13,7 @@ id integer auto_increment not null,
 title varchar(30) not null,
 salary decimal not null,
 department_id Integer not null,
-constraint fk_department_id foreign key (department_id) references department(id),
+constraint fk_department_id foreign key (department_id) references department(id) ON DELETE CASCADE,
 primary key(id)
 );
 
@@ -24,8 +24,8 @@ first_name varchar(30) not null,
 last_name varchar(30) not null,
 role_id integer not null,
 manager_id integer ,
-constraint fk_role_id FOREIGN KEY (role_id) REFERENCES role(id),
-constraint fk_manager_id FOREIGN KEY (manager_id) REFERENCES employee(id),
+constraint fk_role_id FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL,
+constraint fk_manager_id FOREIGN KEY (manager_id) REFERENCES employee(id) ON DELETE SET NULL,
 Primary key(id)
 );
 
