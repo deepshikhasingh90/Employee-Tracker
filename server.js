@@ -220,7 +220,7 @@ function addEmployee() {
         var managerID;
 
         var roleID = findRoleID(newRole, roleListObj)
-        var managerID = (findManagerID(newManager, employeeNamesObj)) ? findManagerID(newManager, employeeNamesObj):null
+        var managerID = (findManagerID(newManager, employeeNamesObj)) ? findManagerID(newManager, employeeNamesObj) : null
 
         connection.query(sqlQuery.addEmployee(newFirstName, newLastName, roleID, managerID), function (err, results) {
             if (err) throw err;
@@ -269,15 +269,15 @@ function updateEmployeeRoles() {
             start();
         }
         else {
-        var newRole = answer.newRole;
-        var employeeName = answer.employee;
-        var updatedRoleID = findRoleID(newRole, roleListObj);
-        connection.query(sqlQuery.updateEmployeeRole(updatedRoleID, employeeName), function (err, results) {
-            if (err) throw err;
-            console.log("Record Updated!")
-            start();
-        })
-    }
+            var newRole = answer.newRole;
+            var employeeName = answer.employee;
+            var updatedRoleID = findRoleID(newRole, roleListObj);
+            connection.query(sqlQuery.updateEmployeeRole(updatedRoleID, employeeName), function (err, results) {
+                if (err) throw err;
+                console.log("Record Updated!")
+                start();
+            })
+        }
     })
 }
 
